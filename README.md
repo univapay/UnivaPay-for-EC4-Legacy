@@ -16,9 +16,7 @@ UnivaPay旧ペイメントゲートウェイプラグイン
 ```sh
 git clone https://github.com/univapaycast/UnivaPay-for-EC4-Legacy.git
 cd UnivaPay-for-EC4-Legacy
-cp docker-compose.sample.yml docker-compose.yml
 docker compose up -d
-docker compose exec web sh -c "composer run-script compile && bin/console eccube:install -n"
 docker compose exec web sh -c "bin/console eccube:plugin:install --code=UpcPaymentPlugin && bin/console eccube:plugin:enable --code=UpcPaymentPlugin"
 ```
 
