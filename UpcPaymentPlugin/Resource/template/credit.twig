@@ -21,27 +21,30 @@
 
                 var holderfirstname  = $('#shopping_order_upc_payment_fn').val();
                 var holderlastname  = $('#shopping_order_upc_payment_ln').val();
+                // お客様情報
+                let email = $('.ec-input > span.customer-edit.customer-email').text().trim() || "{{ Order.getEmail() }}";
+                let phoneNumber = $('.ec-telInput > span').text().trim() || "{{ Order.getPhoneNumber() }}";
+
                 if (card_no == '') {
                     alert('カード番号が入力されていません');
                     return false;
                 }
-				if (cvv === undefined) {
-				  cvv = "";
-				}
+                if (cvv === undefined) {
+                    cvv = "";
+                }
 
                 // サーバ通信してトークンを取得
                 Multipayment.init('{{ Config.apiId }}');
                 Multipayment.getMember({
-                  cardno: card_no,
-                  securitycode: cvv,
-                  expire: exp,
-                  holderfirstname: holderfirstname,
-                  holderlastname: holderlastname
-                },
-                upcPaymentToken);
-                });
-
-
+                    email: email,
+                    cardno: card_no,
+                    phonenumber: phoneNumber,
+                    securitycode: cvv,
+                    expire: exp,
+                    holderfirstname: holderfirstname,
+                    holderlastname: holderlastname,
+                }, upcPaymentToken);
+            });
         });
 
         function upcPaymentToken(response) {
