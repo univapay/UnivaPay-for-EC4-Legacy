@@ -22,7 +22,8 @@
                 var holderfirstname  = $('#shopping_order_upc_payment_fn').val();
                 var holderlastname  = $('#shopping_order_upc_payment_ln').val();
                 // お客様情報
-                let phone = $('.ec-telInput').text().trim() || "{{ Order.getPhoneNumber }}";
+                let email = $('.ec-input > span.customer-edit.customer-email').text().trim() || "{{ Order.getEmail() }}";
+                let phoneNumber = $('.ec-telInput > span').text().trim() || "{{ Order.getPhoneNumber() }}";
 
                 if (card_no == '') {
                     alert('カード番号が入力されていません');
@@ -35,8 +36,9 @@
                 // サーバ通信してトークンを取得
                 Multipayment.init('{{ Config.apiId }}');
                 Multipayment.getMember({
+                    email: email,
                     cardno: card_no,
-                    phonenumber: phone,
+                    phonenumber: phoneNumber,
                     securitycode: cvv,
                     expire: exp,
                     holderfirstname: holderfirstname,
